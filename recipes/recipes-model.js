@@ -30,4 +30,15 @@ function getShoppingList(id) {
 
 function getInstructions(id) {
     //should return a list of step by step instructions for preparing a recipe
+    return db('recipes as r')
+        .join('steps as s', 'r.id', '=', 's.recipe_id')
+        .where({ recipe_id: id})
+        .select('recipe_name as recipe', 'step_number as step', 'instructions')
+        .then(recipe => {
+            if(recipe){
+                return recipe
+            } else {
+                return null
+            }
+        })
 }
