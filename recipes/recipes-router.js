@@ -49,4 +49,23 @@ router.get('/:id/steps', (req, res) => {
         })
 })
 
+router.get('/:id/ri', (req, res) => {
+    const { id } = req.params
+
+    Recipes.getSingleIngred(id)
+        .then(ing => {
+            if(ing){
+                res.status(200).json(ing)
+            } else {
+                res.status(400).json({ message: 'Recipe Id does not exist'})
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: 'Could not load recipe'})
+        })
+})
+
+
+
 module.exports = router
