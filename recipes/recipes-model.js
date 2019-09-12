@@ -8,6 +8,10 @@ module.exports = {
 
 function getRecipes() {
     //should return a list of all recipes in the database.
+    return db('recipes')
+        .then(recipes => {
+            return recipes
+        })
 }
 
 function getShoppingList(id) {
