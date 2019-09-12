@@ -4,7 +4,8 @@ module.exports = {
     getRecipes,
     getShoppingList,
     getInstructions,
-    getSingleIngred
+    getSingleIngred,
+    addRecipe
 }
 
 function getRecipes() {
@@ -56,5 +57,13 @@ function getSingleIngred(id) {
             } else {
                 return null
             }
+        })
+}
+
+function addRecipe(body) {
+    return db('recipes')
+        .insert(body)
+        .then(([recipe]) => {
+            return recipe
         })
 }

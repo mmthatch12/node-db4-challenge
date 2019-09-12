@@ -66,6 +66,23 @@ router.get('/:id/ri', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    const body = req.body
+    if(body.recipe_name){
+        Recipes.addRecipe(body)
+        .then(recipe => {
+            res.status(201).json(recipe)
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: 'Could no add recipe'})
+        })
+    } else {
+        res.status(400).json({ message: 'Recipe name is required'})
+    }
+    
+})
+
 
 
 module.exports = router
