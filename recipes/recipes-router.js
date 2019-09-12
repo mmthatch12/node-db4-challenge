@@ -15,4 +15,21 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params
+
+    Recipes.getShoppingList(id)
+        .then(recipe => {
+            if(recipe){
+                res.status(200).json(recipe)
+            } else {
+                res.status(400).json({ message: 'Recipe Id does not exist'})
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            res.status(500).json({ error: 'Could not load recipe'})
+        })
+})
+
 module.exports = router
