@@ -16,7 +16,9 @@ function getRecipes() {
 
 function getShoppingList(id) {
     //should return a list of all ingredients and quantities for a given recipe
-    return db('recipe_ingredients').where({ recipe_id: id}).first()
+    return db('recipe_ingredients as ri')
+        .join('ingredients as i', 'ri.ingredients_id', '=', 'i.id')
+        .where({ recipe_id: id})
         .then(recipe => {
             if(recipe){
                 return recipe
