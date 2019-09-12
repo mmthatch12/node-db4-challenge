@@ -16,9 +16,11 @@ function getRecipes() {
 
 function getShoppingList(id) {
     //should return a list of all ingredients and quantities for a given recipe
-    return db('recipe_ingredients as ri')
-        .join('ingredients as i', 'ri.ingredients_id', '=', 'i.id')
+    return db('recipes as r')
+        .join('recipe_ingredients as ri', 'r.id', '=', 'ri.recipe_id')
         .where({ recipe_id: id})
+        .join('ingredients as i', 'ri.ingredients_id', '=', 'i.id' )
+        .select('recipe_name as recipe', 'ingredients_name as ingredient', 'quantity')
         .then(recipe => {
             if(recipe){
                 return recipe
@@ -42,3 +44,17 @@ function getInstructions(id) {
             }
         })
 }
+
+// function getShoppingList(id) {
+//     //should return a list of all ingredients and quantities for a given recipe
+//     return db('recipe_ingredients as ri')
+//         .join('ingredients as i', 'ri.ingredients_id', '=', 'i.id')
+//         .where({ recipe_id: id})
+//         .then(recipe => {
+//             if(recipe){
+//                 return recipe
+//             } else {
+//                 return null
+//             }
+//         })    
+// }
